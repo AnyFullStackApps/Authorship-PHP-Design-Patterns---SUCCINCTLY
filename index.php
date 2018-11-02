@@ -15,6 +15,10 @@ include('Structural/decorator.php');
 include('Structural/composite.php');
 include('Structural/facade.php');
 
+include('Behavioral/strategy.php');
+include('Behavioral/observer.php');
+
+
 
 echo "/************************************************* BUILDER *************************************************/<br><br>";
 $director = new Director();
@@ -63,3 +67,22 @@ $form->addElement(new InputElement());
 $form->addElement(new InputElement());
 $form->addElement(new InputElement());
 echo $form->render();//RETURNS form with 3 inputs
+
+
+
+echo "<br><br>/**************************************** STRATEGY *************************************************/<br><br>";
+$tax = new Tax();
+$tax->setCountry(new Poland());
+echo "Vat form value of 1000PLN in Poland is ".$tax->getCountry()->countVat(1000)."PLN.";
+
+
+
+echo "<br><br>/**************************************** STRATEGY *************************************************/<br><br>";
+$news = new News();
+$news->attach(new RSSObserver());
+$news->attach(new NewsletterObserver());
+$news->add(
+    [
+        'title' => 'Title of news',
+        'content' => 'blablabla'
+    ]);
